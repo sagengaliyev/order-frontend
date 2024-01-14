@@ -7,17 +7,19 @@ const OrderForm = () => {
 
   const [step, setStep] = useState(1);
 
+  //метод для перехода на следующий шаг
   const handleNextStep = () => {
     if (validateInputs()) {
         setStep(step + 1);
       }
   };
-
+//метод для возвращения на предыдующий шаг
   const handlePrevStep = () => {
     setStep(step - 1);
   };
-
+//метод для сохранения введенных данных в базу данных
   const sendOrderToAPI = async () => {
+    //валидации на введенные данные
     if (validateInputs()) {
         try {
             const response = await fetch('http://localhost:8080/api/v1/orders', {
@@ -45,17 +47,19 @@ const OrderForm = () => {
     }
     
   };
+  //метод логиги валидации
   const validateInputs = () => {
+    //имя продукта не должно быть пустым
     if (!productName.trim()) {
       alert('Please enter a product name');
       return false;
     }
-
+    //значения количество продукта не должно быть негативным числом или 0
     if (productQuantity <= 0 || isNaN(productQuantity)) {
       alert('Please enter a valid product quantity. It must be positive number and more than 0!');
       return false;
     }
-
+    //значения оплаченная сумма не должно быть негативным числом или 0
     if (amountPaid <= 0 || isNaN(amountPaid)) {
       alert('Please enter a valid amount paid. It must be positive number and more than 0!');
       return false;
